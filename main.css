@@ -1,10 +1,28 @@
 .attribution { font-size: 11px; text-align: center; }
 .attribution a { color: hsl(228, 45%, 44%); }
 
-.products {
+main {
+    display: flex;
+}
+aside {
+    width: 20%;
+}
+.cart {
+    width: 20%;
+}
+.productColumn {
     display: grid;
     grid-template-rows: repeat(auto, 1fr);
     grid-template-columns: repeat(3, 1fr);
+}
+.productDiv {
+    margin: 3%;
+}
+.productDiv p{
+    margin: 0;
+}
+.productText {
+    margin: 10% 0;
 }
 .name {
     font-weight: bold;
@@ -24,12 +42,18 @@
     align-items: center;
 }
 .imageButton{
+    width: 45%;
+    display: flex;
     position: absolute;
-    width: 10%;
-    bottom: -3px;
+    bottom: -15px;
+    border-radius: 20px;
+    border: 1px solid black;
+    padding: 5px 15px;
+    font-weight: bold;
+    justify-content: space-around;
 
 }
-@media only screen and (max-width: 375px){
+@media only screen and (max-width: 425px){
     .products {
         display: grid;
         grid-template-rows: repeat(auto, 1fr);

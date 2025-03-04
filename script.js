@@ -7,7 +7,9 @@ function mapear(contentList) {
 async function objetosJSON() {
     try {
         const resposta = await fetch('data.json')
+        console.log(resposta)
         const contentList = await resposta.json()
+        console.log(contentList)
         mapear(contentList)
         console.log(contentList[0])
 
@@ -17,17 +19,27 @@ async function objetosJSON() {
 
 }
 function createElements(item) {
-    const products = document.getElementById('products')
-    const div = document.createElement('div')
-    
+    const productColumn = document.getElementById('productColumn')
+    const productDiv = document.createElement('productDiv')
+    productDiv.className = 'productDiv'
+
     const divImage = document.createElement('div')
     divImage.className = 'divImage'
     
-    const button = document.createElement('button')
-    button.className = 'imageButton'
+    const productButton = document.createElement('button')
+    productButton.className = 'imageButton'
+
+    const productText = document.createElement('div')
+    productText.className = 'productText'
+    const paragraphCart = document.createElement('p')
+    paragraphCart.innerHTML = 'Add to Cart'
+
+    const addCart = document.createElement('img')
+    addCart.src = '/assets/images/icon-add-to-cart.svg'
+
     const category = document.createElement('p')
     category.innerHTML = item.category
-    category.className = 'category'
+    
     
     const name = document.createElement('p')
     name.innerHTML = item.name
@@ -37,7 +49,10 @@ function createElements(item) {
     img.className = 'img'
     
     const price = document.createElement('p')
-    price.innerHTML = `$${item.price}`
+    const formattedPrice = parseFloat(item.price).toFixed(2)
+    price.innerHTML = `$${formattedPrice}`
+    price.style = 'color: orange;'
+    
     
     if (window.innerWidth <= 479) {
         img.src = item.image.mobile
@@ -47,12 +62,14 @@ function createElements(item) {
         img.src = item.image.desktop
     }
 
-
-    div.appendChild(divImage)
+    productButton.appendChild(addCart)
+    productButton.appendChild(paragraphCart)
+    productDiv.appendChild(divImage)
+    productDiv.appendChild(productText)
     divImage.appendChild(img)
-    divImage.appendChild(button)
-    div.appendChild(category)
-    div.appendChild(name)
-    div.appendChild(price)
-    products.appendChild(div)
+    divImage.appendChild(productButton)
+    productText.appendChild(category)
+    productText.appendChild(name)
+    productText.appendChild(price)
+    productColumn.appendChild(productDiv)
 }
