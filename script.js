@@ -28,7 +28,7 @@ function cart(){
     
     const insideCart = document.createElement('div')
     const img = document.createElement('img')
-    img.src = "/assets/images/illustration-empty-cart.svg"
+    img.src = "./assets/images/illustration-empty-cart.svg"
     const descriptionCard = document.createElement('p')
     descriptionCard.innerHTML = 'Your added items will appear here'
     
@@ -58,7 +58,7 @@ function createElements(item) {
     paragraphCart.innerHTML = 'Add to Cart'
 
     const addCart = document.createElement('img')
-    addCart.src = '/assets/images/icon-add-to-cart.svg'
+    addCart.src = './assets/images/icon-add-to-cart.svg'
 
     const category = document.createElement('p')
     category.innerHTML = item.category
