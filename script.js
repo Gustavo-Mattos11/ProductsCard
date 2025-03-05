@@ -18,6 +18,29 @@ async function objetosJSON() {
     }
 
 }
+
+function cart(){
+    const cartDiv = document.createElement('div')
+    cartDiv.className = 'cartDiv'
+    const cartColumn = document.getElementById('cart')
+    const titleCard = document.createElement('p')
+    titleCard.innerHTML = 'Your Cart (0)'
+    
+    const insideCart = document.createElement('div')
+    const img = document.createElement('img')
+    img.src = "/assets/images/illustration-empty-cart.svg"
+    const descriptionCard = document.createElement('p')
+    descriptionCard.innerHTML = 'Your added items will appear here'
+    
+    cartColumn.appendChild(cartDiv)
+    cartDiv.appendChild(titleCard)
+    cartDiv.appendChild(insideCart)
+    insideCart.appendChild(img)
+    insideCart.appendChild(descriptionCard)
+
+
+}
+
 function createElements(item) {
     const productColumn = document.getElementById('productColumn')
     const productDiv = document.createElement('productDiv')
@@ -72,4 +95,5 @@ function createElements(item) {
     productText.appendChild(name)
     productText.appendChild(price)
     productColumn.appendChild(productDiv)
+
 }
