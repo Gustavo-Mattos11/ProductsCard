@@ -60,6 +60,9 @@ function cart() {
     insideCart.appendChild(img)
     insideCart.appendChild(descriptionCard)
 
+    const addProductsCard = () => {
+        
+    }
 }
 
 function createElements(item) {
@@ -120,31 +123,38 @@ function createElements(item) {
     productColumn.appendChild(productDiv)
 
     productButton.onclick = () => {
-        if (productButton.childElementCount < 3) {
-            var products = 0
-            paragraphCart.innerHTML = products
-            const removeCart = document.createElement('img')
-            removeCart.src = './assets/images/icon-decrement-quantity.svg'
-            removeCart.onclick = () => {
-                if(products >= 1){
-                    products--
-                }
-                paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
+        itemsCart(productButton, paragraphCart, imgCart)
+
+    }
+}
+const itemsCart = (productButton, paragraphCart, imgCart) => {
+    if (productButton.childElementCount < 3) {
+
+        var products = 0
+        paragraphCart.innerHTML = products
+
+        const removeCart = document.createElement('img')
+        removeCart.src = './assets/images/icon-decrement-quantity.svg'
+        removeCart.onclick = () => {
+            if(products >= 1){
+                products--
             }
-            const addCart = document.createElement('img')
-            addCart.src = './assets/images/icon-increment-quantity.svg'
-            addCart.onclick = () => {
-                products++
-                paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
-            }
-            productButton.classList.add('quantity')
-            
-            productButton.insertBefore(removeCart, paragraphCart)
-            productButton.appendChild(addCart)
-            productButton.removeChild(imgCart)
-        } else {
-            
+            paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
         }
 
+        const addCart = document.createElement('img')
+        addCart.src = './assets/images/icon-increment-quantity.svg'
+        addCart.onclick = () => {
+            products++
+            paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
+        }
+
+        productButton.classList.add('quantity')
+        
+        productButton.insertBefore(removeCart, paragraphCart)
+        productButton.appendChild(addCart)
+        productButton.removeChild(imgCart)
+    } else {
+        addProductsCard
     }
 }
