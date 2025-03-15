@@ -61,7 +61,7 @@ function cart() {
     insideCart.appendChild(descriptionCard)
 
     const addProductsCard = () => {
-        
+
     }
 }
 
@@ -128,33 +128,45 @@ function createElements(item) {
     }
 }
 const itemsCart = (productButton, paragraphCart, imgCart) => {
-    if (productButton.childElementCount < 3) {
+    const removeCart = document.createElement('img')
+    removeCart.src = './assets/images/icon-decrement-quantity.svg'
 
-        var products = 0
+    const addCart = document.createElement('img')
+    addCart.src = './assets/images/icon-increment-quantity.svg'
+
+    let products = 1
+
+    if (productButton.childElementCount <= 2) {
+
         paragraphCart.innerHTML = products
 
-        const removeCart = document.createElement('img')
-        removeCart.src = './assets/images/icon-decrement-quantity.svg'
+
         removeCart.onclick = () => {
-            if(products >= 1){
+            if (products >= 1) {
                 products--
             }
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
         }
 
-        const addCart = document.createElement('img')
-        addCart.src = './assets/images/icon-increment-quantity.svg'
+
         addCart.onclick = () => {
             products++
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
         }
 
         productButton.classList.add('quantity')
-        
+
         productButton.insertBefore(removeCart, paragraphCart)
         productButton.appendChild(addCart)
         productButton.removeChild(imgCart)
-    } else {
-        addProductsCard
+    } 
+    if (productButton.childElementCount == 3) {
+        removeCart.onclick = () => {
+            if(products == 1){
+                addCart.parentNode.removeChild(addCart)
+                removeCart.parentNode.removeChild(removeCart)
+                console.log('a')
+            }
+        }
     }
 }
