@@ -1,5 +1,5 @@
 const products = 0
-
+let state = false
 productList = [
     {
         name: 'Waffle',
@@ -130,23 +130,43 @@ function createElements(item) {
 const itemsCart = (productButton, paragraphCart, imgCart) => {
     const removeCart = document.createElement('img')
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
-
+    
+    
+    
     const addCart = document.createElement('img')
     addCart.src = './assets/images/icon-increment-quantity.svg'
-
+    
     let products = 1
-
-    if (productButton.childElementCount <= 2) {
-
+    
+    if (productButton.childElementCount == 3 && state == true) {
+        console.log("productButton =:" + productButton.childElementCount )
+        paragraphCart.innerHTML = products
+        removeCart.addEventListener(`click`, () => {
+            console.log(`a2`)
+            if (products == 1) {
+                console.log(`a3`)
+                productButton.removeChild(addCart)
+                productButton.removeChild(removeCart)
+                productButton.appendChild(imgCart)
+                console.log("removeCart:" + state)
+                
+                console.log("removeCart:" + state)
+            }
+        })
+    }
+    
+    if (productButton.childElementCount <= 2 && state == false) {
+        console.log("productButton:" + state)
         paragraphCart.innerHTML = products
 
 
-        removeCart.onclick = () => {
+        removeCart.addEventListener('click', () => {
+            console.log(`addEventListener (de baixo) acionado`)
             if (products >= 1) {
                 products--
             }
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
-        }
+        })
 
 
         addCart.onclick = () => {
@@ -155,18 +175,10 @@ const itemsCart = (productButton, paragraphCart, imgCart) => {
         }
 
         productButton.classList.add('quantity')
-
         productButton.insertBefore(removeCart, paragraphCart)
         productButton.appendChild(addCart)
         productButton.removeChild(imgCart)
-    } 
-    if (productButton.childElementCount == 3) {
-        removeCart.onclick = () => {
-            if(products == 1){
-                addCart.parentNode.removeChild(addCart)
-                removeCart.parentNode.removeChild(removeCart)
-                console.log('a')
-            }
-        }
+        state = !state
+        console.log("productButton:" + state)
     }
 }
