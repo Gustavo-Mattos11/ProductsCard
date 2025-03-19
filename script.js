@@ -1,12 +1,5 @@
 const products = 0
-let state = false
-productList = [
-    {
-        name: 'Waffle',
-        value: 0
-    },
-    {}
-]
+let stateOfButton = false
 
 function mapear(contentList) {
     contentList.map((item) => {
@@ -130,55 +123,51 @@ function createElements(item) {
 const itemsCart = (productButton, paragraphCart, imgCart) => {
     const removeCart = document.createElement('img')
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
-    
-    
-    
+
+
     const addCart = document.createElement('img')
     addCart.src = './assets/images/icon-increment-quantity.svg'
-    
+
     let products = 1
-    
-    if (productButton.childElementCount == 3 && state == true) {
-        console.log("productButton =:" + productButton.childElementCount )
-        paragraphCart.innerHTML = products
-        removeCart.addEventListener(`click`, () => {
-            console.log(`a2`)
-            if (products == 1) {
-                console.log(`a3`)
-                productButton.removeChild(addCart)
-                productButton.removeChild(removeCart)
-                productButton.appendChild(imgCart)
-                console.log("removeCart:" + state)
-                
-                console.log("removeCart:" + state)
-            }
-        })
-    }
-    
-    if (productButton.childElementCount <= 2 && state == false) {
-        console.log("productButton:" + state)
-        paragraphCart.innerHTML = products
 
 
-        removeCart.addEventListener('click', () => {
-            console.log(`addEventListener (de baixo) acionado`)
-            if (products >= 1) {
-                products--
-            }
-            paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
-        })
+    if (productButton.childElementCount <= 2) {
 
+        paragraphCart.innerHTML = "Add to Cart"
 
         addCart.onclick = () => {
             products++
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
         }
+        if (stateOfButton == false) {
+            productButton.classList.add('quantity')
+            productButton.insertBefore(removeCart, paragraphCart)
+            productButton.appendChild(addCart)
+            productButton.removeChild(imgCart)
+            paragraphCart.innerHTML = products
+            stateOfButton = !stateOfButton
 
-        productButton.classList.add('quantity')
-        productButton.insertBefore(removeCart, paragraphCart)
-        productButton.appendChild(addCart)
-        productButton.removeChild(imgCart)
-        state = !state
-        console.log("productButton:" + state)
+        }
+            stateOfButton = !stateOfButton
+        
+    }
+    removeCart.onclick = () => {
+
+        if (products == 1) {
+
+            productButton.removeChild(addCart)
+            productButton.removeChild(removeCart)
+            productButton.insertBefore(imgCart, paragraphCart)
+            paragraphCart.innerHTML = 'Add to Cart'
+            const removeClass = productButton.classList
+            removeClass.remove('quantity')
+            stateOfButton = !stateOfButton
+
+
+        } else if (products > 1) {
+            products--
+            paragraphCart.innerHTML = products
+        }
+        // somar ou diminuir quantidade ao clicar em um dos botões
     }
 }
