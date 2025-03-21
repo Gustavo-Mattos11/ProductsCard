@@ -54,7 +54,9 @@ function cart() {
     insideCart.appendChild(imgCake)
     insideCart.appendChild(descriptionCart)
 
-    
+    let productsCart = () => {
+
+    }
 }
 
 function createElements(item) {
@@ -162,8 +164,8 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
           
         if (products == 1) {
             
-            productButton.removeChild(addCart)
-            productButton.removeChild(removeCart)
+            productButton.removeChild(addCartDiv)
+            productButton.removeChild(removeCartDiv)
             productButton.insertBefore(imgCart, paragraphCart)
             paragraphCart.innerHTML = 'Add to Cart'
             const removeClass = productButton.classList
