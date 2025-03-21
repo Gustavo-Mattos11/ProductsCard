@@ -1,5 +1,8 @@
 const products = 0
 let stateOfButton = false
+const titleCard = document.createElement('p')
+const imgCake = document.createElement('img')
+const descriptionCart = document.createElement('p')
 
 function mapear(contentList) {
     contentList.map((item) => {
@@ -25,14 +28,12 @@ function cart() {
 
 
     const cartColumn = document.getElementById('cart')
-    const titleCard = document.createElement('p')
-    titleCard.innerHTML = 'Your Cart (0)'
+    
+    titleCard.innerHTML = `Your Cart (${products})`
 
     const insideCart = document.createElement('div')
-    const img = document.createElement('img')
-    img.src = "./assets/images/illustration-empty-cart.svg"
-    const descriptionCard = document.createElement('p')
-    descriptionCard.innerHTML = 'Your added items will appear here'
+    imgCake.src = "./assets/images/illustration-empty-cart.svg"
+    descriptionCart.innerHTML = 'Your added items will appear here'
     if (window.innerWidth <= 425) {
         const footer = document.createElement('footer')
 
@@ -50,12 +51,10 @@ function cart() {
 
     cartDiv.appendChild(titleCard)
     cartDiv.appendChild(insideCart)
-    insideCart.appendChild(img)
-    insideCart.appendChild(descriptionCard)
+    insideCart.appendChild(imgCake)
+    insideCart.appendChild(descriptionCart)
 
-    const addProductsCard = () => {
-
-    }
+    
 }
 
 function createElements(item) {
@@ -116,33 +115,41 @@ function createElements(item) {
     productColumn.appendChild(productDiv)
 
     productButton.onclick = () => {
-        itemsCart(productButton, paragraphCart, imgCart)
+        itemsCart(productButton, paragraphCart, imgCart, item)
 
     }
 }
-const itemsCart = (productButton, paragraphCart, imgCart) => {
-    const removeCart = document.createElement('img')
+const itemsCart = (productButton, paragraphCart, imgCart, item) => {
+    const removeCart = document.createElement('img') // imagem de remoção de item do carrinho
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
+    removeCart.style = "margin: 40%;"
+    
+    const removeCartDiv = document.createElement('div')
+    removeCartDiv.className = "changeCartDiv"
+    removeCartDiv.appendChild(removeCart)
 
-
-    const addCart = document.createElement('img')
+    const addCart = document.createElement('img') // imagem de adição de item do carrinho
     addCart.src = './assets/images/icon-increment-quantity.svg'
-
+    const addCartDiv = document.createElement('div')
+    addCartDiv.className = "changeCartDiv"
+    addCartDiv.appendChild(addCart)
     let products = 1
-
+  
 
     if (productButton.childElementCount <= 2) {
-
+          
         paragraphCart.innerHTML = "Add to Cart"
 
         addCart.onclick = () => {
             products++
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
+            
+            console.log(item.price*products)
         }
         if (stateOfButton == false) {
             productButton.classList.add('quantity')
-            productButton.insertBefore(removeCart, paragraphCart)
-            productButton.appendChild(addCart)
+            productButton.insertBefore(removeCartDiv, paragraphCart)
+            productButton.appendChild(addCartDiv)
             productButton.removeChild(imgCart)
             paragraphCart.innerHTML = products
             stateOfButton = !stateOfButton
@@ -152,9 +159,9 @@ const itemsCart = (productButton, paragraphCart, imgCart) => {
         
     }
     removeCart.onclick = () => {
-
+          
         if (products == 1) {
-
+            
             productButton.removeChild(addCart)
             productButton.removeChild(removeCart)
             productButton.insertBefore(imgCart, paragraphCart)
@@ -166,6 +173,11 @@ const itemsCart = (productButton, paragraphCart, imgCart) => {
 
         } else if (products > 1) {
             products--
+            let itemQuantity = [
+                {
+                    "category": item.category, 
+                    "quantity": products}]
+            console.log(`Category: ${itemQuantity[0].category}, Quantity: ${itemQuantity[0].quantity}`)
             paragraphCart.innerHTML = products
         }
         // somar ou diminuir quantidade ao clicar em um dos botões
