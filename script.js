@@ -21,15 +21,14 @@ async function objetosJSON() {
 
 }
 
-function cart() {
+function cart(item, products) {
     const centerColumn = document.getElementById('centerColumn')
     const cartDiv = document.createElement('div')
     cartDiv.className = 'cartDiv'
 
-
     const cartColumn = document.getElementById('cart')
     
-    titleCard.innerHTML = `Your Cart (${products})`
+    titleCard.innerHTML = `Your Cart (0)`
 
     const insideCart = document.createElement('div')
     imgCake.src = "./assets/images/illustration-empty-cart.svg"
@@ -48,15 +47,21 @@ function cart() {
         main.insertBefore(aside, centerColumn)
         cartColumn.appendChild(cartDiv)
     }
-
+    
     cartDiv.appendChild(titleCard)
     cartDiv.appendChild(insideCart)
     insideCart.appendChild(imgCake)
     insideCart.appendChild(descriptionCart)
-
-    let productsCart = () => {
-
-    }
+    if(products >= 1){
+        console.log('deu certo')
+        insideCart.removeChild(imgCake)
+        insideCart.removeChild(descriptionCart)
+        let teste = document.createElement('p')
+        teste.innerHTML = item.category
+        insideCart.appendChild(teste)
+    }else{
+}
+   
 }
 
 function createElements(item) {
@@ -175,6 +180,7 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
 
         } else if (products > 1) {
             products--
+            cart(item, products)
             let itemQuantity = [
                 {
                     "category": item.category, 
