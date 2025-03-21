@@ -1,8 +1,17 @@
 const products = 0
 let stateOfButton = false
+let stateOfCart = false
 const titleCard = document.createElement('p')
-const imgCake = document.createElement('img')
-const descriptionCart = document.createElement('p')
+titleCard.innerHTML = `Your Cart (0)`
+
+
+const aside = document.createElement('aside')
+
+function estrutura() {
+    const centerColumn = document.getElementById('centerColumn')
+    const main = document.querySelector('main')
+    main.insertBefore(aside, centerColumn)
+}
 
 function mapear(contentList) {
     contentList.map((item) => {
@@ -20,48 +29,55 @@ async function objetosJSON() {
     }
 
 }
-
-function cart(item, products) {
-    const centerColumn = document.getElementById('centerColumn')
+function changeCart(item, products, imgCake, descriptionCart, insideCart, productButton, cartColumn, cartDiv) {
+   
+    
+    if (products >= 1) {
+        stateOfCart = !stateOfCart
+        console.log('deu certo: ' + stateOfCart)
+        cartDiv.remove(insideCart)
+    } else {
+    }
+}
+function cart(item, products, productButton) {
+    estrutura()
+    const imgCake = document.createElement('img')
+    const descriptionCart = document.createElement('p')
     const cartDiv = document.createElement('div')
     cartDiv.className = 'cartDiv'
 
+    const cartDivQuantity = document.getElementsByClassName('cartDiv') // Verificar quantas cartDiv existem no DOM
+
     const cartColumn = document.getElementById('cart')
-    
-    titleCard.innerHTML = `Your Cart (0)`
 
     const insideCart = document.createElement('div')
+    insideCart.className = 'insideCart'
     imgCake.src = "./assets/images/illustration-empty-cart.svg"
-    descriptionCart.innerHTML = 'Your added items will appear here'
-    if (window.innerWidth <= 425) {
-        const footer = document.createElement('footer')
 
-        centerColumn.appendChild(footer)
-        footer.appendChild(cartDiv)
+    if (stateOfCart == false) {
+        descriptionCart.innerHTML = 'Your added items will appear here'
+        if (window.innerWidth <= 425) {
+            const footer = document.createElement('footer')
+
+            centerColumn.appendChild(footer)
+            footer.appendChild(cartDiv)
+        }
+
+        console.log(cartDivQuantity.length)
+        cartDivQuantity.length < 2 ? cartColumn.appendChild(cartDiv) : null
 
 
-
-    } else {
-        const main = document.querySelector('main')
-        const aside = document.createElement('aside')
-        main.insertBefore(aside, centerColumn)
-        cartColumn.appendChild(cartDiv)
+        if (cartDivQuantity.length == 1 && stateOfButton == false) {
+            console.log(cartDivQuantity.length)
+            cartDiv.appendChild(titleCard)
+            cartDiv.appendChild(insideCart)
+            insideCart.appendChild(imgCake)
+            insideCart.appendChild(descriptionCart)
+        } else{
+        changeCart(item, products, imgCake, descriptionCart, insideCart, productButton, cartColumn, cartDiv)
+        }
     }
-    
-    cartDiv.appendChild(titleCard)
-    cartDiv.appendChild(insideCart)
-    insideCart.appendChild(imgCake)
-    insideCart.appendChild(descriptionCart)
-    if(products >= 1){
-        console.log('deu certo')
-        insideCart.removeChild(imgCake)
-        insideCart.removeChild(descriptionCart)
-        let teste = document.createElement('p')
-        teste.innerHTML = item.category
-        insideCart.appendChild(teste)
-    }else{
-}
-   
+
 }
 
 function createElements(item) {
@@ -130,7 +146,7 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
     const removeCart = document.createElement('img') // imagem de remoção de item do carrinho
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
     removeCart.style = "margin: 40%;"
-    
+
     const removeCartDiv = document.createElement('div')
     removeCartDiv.className = "changeCartDiv"
     removeCartDiv.appendChild(removeCart)
@@ -141,17 +157,17 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
     addCartDiv.className = "changeCartDiv"
     addCartDiv.appendChild(addCart)
     let products = 1
-  
+
 
     if (productButton.childElementCount <= 2) {
-          
+
         paragraphCart.innerHTML = "Add to Cart"
 
         addCart.onclick = () => {
             products++
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
-            
-            console.log(item.price*products)
+
+            console.log(item.price * products)
         }
         if (stateOfButton == false) {
             productButton.classList.add('quantity')
@@ -162,13 +178,13 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
             stateOfButton = !stateOfButton
 
         }
-            stateOfButton = !stateOfButton
-        
+        stateOfButton = !stateOfButton
+
     }
     removeCart.onclick = () => {
-          
+
         if (products == 1) {
-            
+
             productButton.removeChild(addCartDiv)
             productButton.removeChild(removeCartDiv)
             productButton.insertBefore(imgCart, paragraphCart)
@@ -180,13 +196,9 @@ const itemsCart = (productButton, paragraphCart, imgCart, item) => {
 
         } else if (products > 1) {
             products--
-            cart(item, products)
-            let itemQuantity = [
-                {
-                    "category": item.category, 
-                    "quantity": products}]
-            console.log(`Category: ${itemQuantity[0].category}, Quantity: ${itemQuantity[0].quantity}`)
             paragraphCart.innerHTML = products
+            cart(item, products)
+
         }
         // somar ou diminuir quantidade ao clicar em um dos botões
     }
