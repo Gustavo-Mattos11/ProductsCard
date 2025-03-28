@@ -1,5 +1,8 @@
 const products = 0
 let stateOfButton = false
+let stateOfCart = false
+const cartDiv = document.createElement('div')
+cartDiv.className = 'cartDiv'
 
 function mapear(contentList) {
     contentList.map((item) => {
@@ -18,13 +21,11 @@ async function objetosJSON() {
 
 }
 
-function cart() {
+function baseCart() {
     const centerColumn = document.getElementById('centerColumn')
-    const cartDiv = document.createElement('div')
-    cartDiv.className = 'cartDiv'
+    centerColumn.id = 'centerColumn'
 
-
-    const cartColumn = document.getElementById('cart')
+    const cartColumn = document.getElementById('cartColumn')
     const titleCard = document.createElement('p')
     titleCard.innerHTML = 'Your Cart (0)'
 
@@ -53,9 +54,30 @@ function cart() {
     insideCart.appendChild(img)
     insideCart.appendChild(descriptionCard)
 
-    const addProductsCard = () => {
 
+}
+function cartItems() {
+    const cartColumn = document.getElementById('cartColumn')
+
+    console.log(stateOfCart)
+    const cartDivProducts = document.createElement('div')
+    cartDivProducts.id = 'cartDivProducts'
+    cartDivProducts.style.width = '200px'
+    cartDivProducts.style.backgroundColor = 'blue'
+    cartDivProducts.innerHTML = 'a'
+    const cartDivProductsDOM = document.getElementById('cartDivProducts') // pega a div direto no DOM
+
+    
+    cartDivProductsDOM == null && stateOfCart == false ? cartColumn.appendChild(cartDivProducts) : null // Verifica se a div NÃO está no DOM, se NÃO estiver já coloca ela.
+    cartDivProductsDOM != null && stateOfCart == true ? (cartColumn.removeChild(cartDivProducts), cartColumn.appendChild(cartDiv)) : null
+    cartDiv && stateOfCart == false ? (cartColumn.removeChild(cartDiv), stateOfCart = !stateOfCart)  : null; // Verifica se existe o cartDiv no DOM ou não, para após isso se TIVER, apaga-lo.
+    
+    
+    if (cartDivProductsDOM != null && stateOfCart == true ) {
+        cartColumn.removeChild(cartDivProducts)
+        cartColumn.appendChild(cartDiv)
     }
+    console.log(stateOfCart)
 }
 
 function createElements(item) {
@@ -116,11 +138,11 @@ function createElements(item) {
     productColumn.appendChild(productDiv)
 
     productButton.onclick = () => {
-        itemsCart(productButton, paragraphCart, imgCart)
-
+        changeButton(productButton, paragraphCart, imgCart)
+        cartItems()// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
     }
 }
-const itemsCart = (productButton, paragraphCart, imgCart) => {
+const changeButton = (productButton, paragraphCart, imgCart) => {
     const removeCart = document.createElement('img')
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
 
@@ -148,8 +170,8 @@ const itemsCart = (productButton, paragraphCart, imgCart) => {
             stateOfButton = !stateOfButton
 
         }
-            stateOfButton = !stateOfButton
-        
+        stateOfButton = !stateOfButton
+
     }
     removeCart.onclick = () => {
 
