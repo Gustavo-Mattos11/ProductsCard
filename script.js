@@ -1,8 +1,22 @@
 const products = 0
 let stateOfButton = false
 let stateOfCart = false
+<<<<<<< HEAD
 const cartDiv = document.createElement('div')
 cartDiv.className = 'cartDiv'
+=======
+const titleCard = document.createElement('p')
+titleCard.innerHTML = `Your Cart (0)`
+
+
+const aside = document.createElement('aside')
+
+function estrutura() {
+    const centerColumn = document.getElementById('centerColumn')
+    const main = document.querySelector('main')
+    main.insertBefore(aside, centerColumn)
+}
+>>>>>>> 6f073b4800d29e9afbf5fcf8e0fcb47f862ed780
 
 function mapear(contentList) {
     contentList.map((item) => {
@@ -20,6 +34,7 @@ async function objetosJSON() {
     }
 
 }
+<<<<<<< HEAD
 
 function baseCart() {
     const centerColumn = document.getElementById('centerColumn')
@@ -28,27 +43,58 @@ function baseCart() {
     const cartColumn = document.getElementById('cartColumn')
     const titleCard = document.createElement('p')
     titleCard.innerHTML = 'Your Cart (0)'
+=======
+function changeCart(item, products, imgCake, descriptionCart, insideCart, productButton, cartColumn, cartDiv) {
+   
+    
+    if (products >= 1) {
+        stateOfCart = !stateOfCart
+        console.log('deu certo: ' + stateOfCart)
+        cartDiv.remove(insideCart)
+    } else {
+    }
+}
+function cart(item, products, productButton) {
+    estrutura()
+    const imgCake = document.createElement('img')
+    const descriptionCart = document.createElement('p')
+    const cartDiv = document.createElement('div')
+    cartDiv.className = 'cartDiv'
+
+    const cartDivQuantity = document.getElementsByClassName('cartDiv') // Verificar quantas cartDiv existem no DOM
+
+    const cartColumn = document.getElementById('cart')
+>>>>>>> 6f073b4800d29e9afbf5fcf8e0fcb47f862ed780
 
     const insideCart = document.createElement('div')
-    const img = document.createElement('img')
-    img.src = "./assets/images/illustration-empty-cart.svg"
-    const descriptionCard = document.createElement('p')
-    descriptionCard.innerHTML = 'Your added items will appear here'
-    if (window.innerWidth <= 425) {
-        const footer = document.createElement('footer')
+    insideCart.className = 'insideCart'
+    imgCake.src = "./assets/images/illustration-empty-cart.svg"
 
-        centerColumn.appendChild(footer)
-        footer.appendChild(cartDiv)
+    if (stateOfCart == false) {
+        descriptionCart.innerHTML = 'Your added items will appear here'
+        if (window.innerWidth <= 425) {
+            const footer = document.createElement('footer')
+
+            centerColumn.appendChild(footer)
+            footer.appendChild(cartDiv)
+        }
+
+        console.log(cartDivQuantity.length)
+        cartDivQuantity.length < 2 ? cartColumn.appendChild(cartDiv) : null
 
 
-
-    } else {
-        const main = document.querySelector('main')
-        const aside = document.createElement('aside')
-        main.insertBefore(aside, centerColumn)
-        cartColumn.appendChild(cartDiv)
+        if (cartDivQuantity.length == 1 && stateOfButton == false) {
+            console.log(cartDivQuantity.length)
+            cartDiv.appendChild(titleCard)
+            cartDiv.appendChild(insideCart)
+            insideCart.appendChild(imgCake)
+            insideCart.appendChild(descriptionCart)
+        } else{
+        changeCart(item, products, imgCake, descriptionCart, insideCart, productButton, cartColumn, cartDiv)
+        }
     }
 
+<<<<<<< HEAD
     cartDiv.appendChild(titleCard)
     cartDiv.appendChild(insideCart)
     insideCart.appendChild(img)
@@ -78,6 +124,8 @@ function cartItems() {
         cartColumn.appendChild(cartDiv)
     }
     console.log(stateOfCart)
+=======
+>>>>>>> 6f073b4800d29e9afbf5fcf8e0fcb47f862ed780
 }
 
 function createElements(item) {
@@ -138,18 +186,33 @@ function createElements(item) {
     productColumn.appendChild(productDiv)
 
     productButton.onclick = () => {
+<<<<<<< HEAD
         changeButton(productButton, paragraphCart, imgCart)
         cartItems()// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
     }
 }
 const changeButton = (productButton, paragraphCart, imgCart) => {
     const removeCart = document.createElement('img')
+=======
+        itemsCart(productButton, paragraphCart, imgCart, item)
+
+    }
+}
+const itemsCart = (productButton, paragraphCart, imgCart, item) => {
+    const removeCart = document.createElement('img') // imagem de remoção de item do carrinho
+>>>>>>> 6f073b4800d29e9afbf5fcf8e0fcb47f862ed780
     removeCart.src = './assets/images/icon-decrement-quantity.svg'
+    removeCart.style = "margin: 40%;"
 
+    const removeCartDiv = document.createElement('div')
+    removeCartDiv.className = "changeCartDiv"
+    removeCartDiv.appendChild(removeCart)
 
-    const addCart = document.createElement('img')
+    const addCart = document.createElement('img') // imagem de adição de item do carrinho
     addCart.src = './assets/images/icon-increment-quantity.svg'
-
+    const addCartDiv = document.createElement('div')
+    addCartDiv.className = "changeCartDiv"
+    addCartDiv.appendChild(addCart)
     let products = 1
 
 
@@ -160,11 +223,13 @@ const changeButton = (productButton, paragraphCart, imgCart) => {
         addCart.onclick = () => {
             products++
             paragraphCart.innerHTML = products // somar ou diminuir quantidade ao clicar em um dos botões
+
+            console.log(item.price * products)
         }
         if (stateOfButton == false) {
             productButton.classList.add('quantity')
-            productButton.insertBefore(removeCart, paragraphCart)
-            productButton.appendChild(addCart)
+            productButton.insertBefore(removeCartDiv, paragraphCart)
+            productButton.appendChild(addCartDiv)
             productButton.removeChild(imgCart)
             paragraphCart.innerHTML = products
             stateOfButton = !stateOfButton
@@ -177,8 +242,8 @@ const changeButton = (productButton, paragraphCart, imgCart) => {
 
         if (products == 1) {
 
-            productButton.removeChild(addCart)
-            productButton.removeChild(removeCart)
+            productButton.removeChild(addCartDiv)
+            productButton.removeChild(removeCartDiv)
             productButton.insertBefore(imgCart, paragraphCart)
             paragraphCart.innerHTML = 'Add to Cart'
             const removeClass = productButton.classList
@@ -189,6 +254,8 @@ const changeButton = (productButton, paragraphCart, imgCart) => {
         } else if (products > 1) {
             products--
             paragraphCart.innerHTML = products
+            cart(item, products)
+
         }
         // somar ou diminuir quantidade ao clicar em um dos botões
     }

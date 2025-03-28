@@ -30,38 +30,49 @@ aside {
 .productText {
     margin: 10% 0;
 }
-.name {
-    font-weight: bold;
-}
-.img {
+.img { /* Imagem em si de cada comida*/
     display: block;
     width: 100%;
     border-radius: 20px;
 }
-.category {
+.name { /* Nome dos itens */
+    font-weight: bold;
+}
+.category { /* Categoria dos itens */
     color: gray;
 }
-.divImage {
+.divImage { /* Alinhamento que faz o botão ficar "no meio" da imagem */
     position: relative;
     display: flex;  
     flex-direction: column;
     align-items: center;
 }
-.productButton{
+.productButton{ /* Botão padrão */
     width: 60%;
     display: flex;
     position: absolute;
     bottom: -15px;
     border-radius: 20px;
     border: 1px solid black;
-    padding: 0px 10px;
+    padding: 5px 0;
     font-size: 0.7em;
     font-weight: bold;
     justify-content: space-around;
     align-items: center;
 }
-.quantity {
-    background-color: orange;
+.quantity { /* Botão já com as quantidades */
+    display: flex;
+    background-color: hsl(14, 86%, 42%);
+
+}
+.changeCartDiv { /* Div de adição e remoção do carrinho*/
+    display: flex;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    padding: 2px;
+    
 }
 @media only screen and (max-width: 425px){
     .productColumn {
