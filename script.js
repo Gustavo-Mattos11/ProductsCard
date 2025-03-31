@@ -56,72 +56,45 @@ function emptyCart() {
 
 
 }
-function cartItems(item, name, category, price, formattedPrice) {
-    const cartColumn = document.getElementById('cartColumn')
-
-    console.log(stateOfCart)
-    const cartDivProducts = document.createElement('div')
-    cartDivProducts.id = 'cartDivProducts'
-
-    const cartDivProductsDOM = document.getElementById('cartDivProducts') // pega a div direto no DOM
-
-    function AddCartItems(item, name, category, price, formattedPrice) { // Criar e adicionar items ao cartDivProducts
-        const headerCart = document.createElement('p')
-        headerCart.innerHTML = `Your Cart ${0}`
-
-        
-
-
-        cartColumn.appendChild(cartDivProducts)
-        cartDivProducts.appendChild(headerCart)
-    }
-
-    cartDivProductsDOM == null && stateOfCart == false ? AddCartItems() : null // Verifica se a div NÃO está no DOM, se NÃO estiver já coloca ela.
-    cartDiv && stateOfCart == false ? (cartColumn.removeChild(cartDiv), stateOfCart = !stateOfCart) : null; // Verifica se existe o cartDiv no DOM ou não, para após isso se TIVER, apaga-lo.
-    cartDivProductsDOM != null && stateOfCart == true ? (cartColumn.removeChild(cartDivProductsDOM), cartColumn.appendChild(cartDiv), stateOfCart = !stateOfCart) : null
-
-
-    console.log(stateOfCart)
-}
 
 function createElements(item) {
     const productColumn = document.getElementById('productColumn')
     const productDiv = document.createElement('div')
     productDiv.className = 'productDiv'
-
+    
     const divImage = document.createElement('div')
     divImage.className = 'divImage'
-
+    
     const productButton = document.createElement('button')
     productButton.className = 'productButton'
     productButton.name = item.category
-
-
+    
+    
     const productText = document.createElement('div')
     productText.className = 'productText'
     const paragraphCart = document.createElement('p')
     paragraphCart.innerHTML = 'Add to Cart'
-
+    
     const imgCart = document.createElement('img')
     imgCart.src = ' ./assets/images/icon-add-to-cart.svg'
-
+    
     const category = document.createElement('p')
     category.innerHTML = item.category
-
-
+    
+    
     const name = document.createElement('p')
     name.innerHTML = item.name
     name.className = 'name'
-
+    
     const img = document.createElement('img')
     img.className = 'img'
-
+    
     const price = document.createElement('p')
     const formattedPrice = parseFloat(item.price).toFixed(2)
     price.innerHTML = `$${formattedPrice}`
     price.style = 'color: orange;'
-
-
+    
+    
     if (window.innerWidth <= 479) {
         img.src = item.image.mobile
     } else if (window.innerWidth > 479 && window.innerWidth <= 768) {
@@ -129,7 +102,7 @@ function createElements(item) {
     } else {
         img.src = item.image.desktop
     }
-
+    
     productButton.appendChild(imgCart)
     productButton.appendChild(paragraphCart)
     productDiv.appendChild(divImage)
@@ -140,11 +113,44 @@ function createElements(item) {
     productText.appendChild(name)
     productText.appendChild(price)
     productColumn.appendChild(productDiv)
-
+    
     productButton.onclick = () => {
+        console.log("productButton teste: " + item.name)
         changeButton(productButton, paragraphCart, imgCart)
-        cartItems(item, name, category, price, formattedPrice)// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
+        cartItems(item)// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
     }
+}
+function cartItems(item) {
+    const cartColumn = document.getElementById('cartColumn')
+    console.log(`cartItems teste: ${item.name}`)
+
+    const cartDivProducts = document.createElement('div')
+    cartDivProducts.id = 'cartDivProducts'
+
+    const cartDivProductsDOM = document.getElementById('cartDivProducts') // pega a div direto no DOM
+   
+    function AddCartItems(){ // Criar e adicionar items ao cartDivProducts
+        console.log(item.name)
+        const headerCart = document.createElement('p')
+        headerCart.innerHTML = `Your Cart ${0}`
+
+        const nameCart = document.createElement('p')
+
+
+
+        cartColumn.appendChild(cartDivProducts)
+        cartDivProducts.appendChild(headerCart)
+        cartDivProducts.appendChild(nameCart)
+        
+
+    }
+
+    cartDivProductsDOM == null && stateOfCart == false ? AddCartItems(item) : null // Verifica se a div NÃO está no DOM, se NÃO estiver já coloca ela.
+    cartDiv && stateOfCart == false ? (cartColumn.removeChild(cartDiv), stateOfCart = !stateOfCart) : null; // Verifica se existe o cartDiv no DOM ou não, para após isso se TIVER, apaga-lo.
+    cartDivProductsDOM != null && stateOfCart == true ? (cartColumn.removeChild(cartDivProductsDOM), cartColumn.appendChild(cartDiv), stateOfCart = !stateOfCart) : null
+
+
+    console.log(stateOfCart)
 }
 const changeButton = (productButton, paragraphCart, imgCart) => {
     const removeCart = document.createElement('img')
