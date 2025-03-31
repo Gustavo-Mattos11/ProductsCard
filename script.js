@@ -21,7 +21,7 @@ async function objetosJSON() {
 
 }
 
-function baseCart() {
+function emptyCart() {
     const centerColumn = document.getElementById('centerColumn')
     centerColumn.id = 'centerColumn'
 
@@ -56,27 +56,31 @@ function baseCart() {
 
 
 }
-function cartItems() {
+function cartItems(item, name, category, price, formattedPrice) {
     const cartColumn = document.getElementById('cartColumn')
 
     console.log(stateOfCart)
     const cartDivProducts = document.createElement('div')
     cartDivProducts.id = 'cartDivProducts'
-    cartDivProducts.style.width = '200px'
-    cartDivProducts.style.backgroundColor = 'blue'
-    cartDivProducts.innerHTML = 'a'
+
     const cartDivProductsDOM = document.getElementById('cartDivProducts') // pega a div direto no DOM
 
-    
-    cartDivProductsDOM == null && stateOfCart == false ? cartColumn.appendChild(cartDivProducts) : null // Verifica se a div NÃO está no DOM, se NÃO estiver já coloca ela.
-    cartDivProductsDOM != null && stateOfCart == true ? (cartColumn.removeChild(cartDivProducts), cartColumn.appendChild(cartDiv)) : null
-    cartDiv && stateOfCart == false ? (cartColumn.removeChild(cartDiv), stateOfCart = !stateOfCart)  : null; // Verifica se existe o cartDiv no DOM ou não, para após isso se TIVER, apaga-lo.
-    
-    
-    if (cartDivProductsDOM != null && stateOfCart == true ) {
-        cartColumn.removeChild(cartDivProducts)
-        cartColumn.appendChild(cartDiv)
+    function AddCartItems(item, name, category, price, formattedPrice) { // Criar e adicionar items ao cartDivProducts
+        const headerCart = document.createElement('p')
+        headerCart.innerHTML = `Your Cart ${0}`
+
+        
+
+
+        cartColumn.appendChild(cartDivProducts)
+        cartDivProducts.appendChild(headerCart)
     }
+
+    cartDivProductsDOM == null && stateOfCart == false ? AddCartItems() : null // Verifica se a div NÃO está no DOM, se NÃO estiver já coloca ela.
+    cartDiv && stateOfCart == false ? (cartColumn.removeChild(cartDiv), stateOfCart = !stateOfCart) : null; // Verifica se existe o cartDiv no DOM ou não, para após isso se TIVER, apaga-lo.
+    cartDivProductsDOM != null && stateOfCart == true ? (cartColumn.removeChild(cartDivProductsDOM), cartColumn.appendChild(cartDiv), stateOfCart = !stateOfCart) : null
+
+
     console.log(stateOfCart)
 }
 
@@ -139,7 +143,7 @@ function createElements(item) {
 
     productButton.onclick = () => {
         changeButton(productButton, paragraphCart, imgCart)
-        cartItems()// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
+        cartItems(item, name, category, price, formattedPrice)// Criar função que cria um novo productsCart por cima do antigo só que direto com o produto inserido
     }
 }
 const changeButton = (productButton, paragraphCart, imgCart) => {
