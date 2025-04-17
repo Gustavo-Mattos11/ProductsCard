@@ -5,9 +5,7 @@ const cartDiv = document.createElement('div')
 cartDiv.className = 'cartDiv'
 
 function mapear(contentList) {
-    contentList.map((item) => {
-        createElements(item)
-    })
+    contentList.map(item => createElements(item))
 }
 async function objetosJSON() {
     try {
@@ -61,59 +59,34 @@ function createElements(item) {
     const productColumn = document.getElementById('productColumn')
     const productDiv = document.createElement('div')
     productDiv.className = 'productDiv'
-    
+
     const divImage = document.createElement('div')
     divImage.className = 'divImage'
-    
+    const imgSRC = window.innerWidth <= 479 ? item.image.mobile
+        : window.innerWidth <= 768 ? item.image.tablet
+            : item.image.desktop;
+    divImage.innerHTML = `<img class="img" src="${imgSRC}">`
+
     const productButton = document.createElement('button')
     productButton.className = 'productButton'
     productButton.name = item.category
-    
-    
-    const productText = document.createElement('div')
-    productText.className = 'productText'
-    const paragraphCart = document.createElement('p')
-    paragraphCart.innerHTML = 'Add to Cart'
-    
-    const imgCart = document.createElement('img')
-    imgCart.src = ' ./assets/images/icon-add-to-cart.svg'
-    
-    const category = document.createElement('p')
-    category.innerHTML = item.category
-    
-    
-    const name = document.createElement('p')
-    name.innerHTML = item.name
-    name.className = 'name'
-    
-    const img = document.createElement('img')
-    img.className = 'img'
-    
-    const price = document.createElement('p')
+    productButton.innerHTML = `<img src="./assets/images/icon-add-to-cart.svg">
+                               <p>Add to Cart</p>`
+
+
     const formattedPrice = parseFloat(item.price).toFixed(2)
-    price.innerHTML = `$${formattedPrice}`
-    price.style = 'color: orange;'
-    
-    
-    if (window.innerWidth <= 479) {
-        img.src = item.image.mobile
-    } else if (window.innerWidth > 479 && window.innerWidth <= 768) {
-        img.src = item.image.tablet
-    } else {
-        img.src = item.image.desktop
-    }
-    
-    productButton.appendChild(imgCart)
-    productButton.appendChild(paragraphCart)
+    const productText =  document.createElement('div')
+    productText.innerHTML = `<div class="productText">
+                                <p>${item.category}</p>
+                                <p class="name">${item.name}</p>
+                                <p style="color: orange">$${formattedPrice}</p>
+                             </div>`
+
     productDiv.appendChild(divImage)
     productDiv.appendChild(productText)
-    divImage.appendChild(img)
     divImage.appendChild(productButton)
-    productText.appendChild(category)
-    productText.appendChild(name)
-    productText.appendChild(price)
     productColumn.appendChild(productDiv)
-    
+
     productButton.onclick = () => {
         console.log("productButton teste: " + item.name)
         changeButton(productButton, paragraphCart, imgCart)
@@ -128,7 +101,7 @@ function cartItems(item) {
     cartDivProducts.id = 'cartDivProducts'
 
     const cartDivProductsDOM = document.getElementById('cartDivProducts') // pega a div direto no DOM
-   
+
     function AddCartItems(){ // Criar e adicionar items ao cartDivProducts
         console.log(item.name)
         const headerCart = document.createElement('p')
@@ -141,7 +114,7 @@ function cartItems(item) {
         cartColumn.appendChild(cartDivProducts)
         cartDivProducts.appendChild(headerCart)
         cartDivProducts.appendChild(nameCart)
-        
+
 
     }
 
